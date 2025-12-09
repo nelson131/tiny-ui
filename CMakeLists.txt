@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10.0)
 set(CMAKE_CXX_COMPILER g++)
-project(tiny-ui VERSION 0.1.0 LANGUAGES C CXX)
+project(tiny-ui VERSION 1.1.0 LANGUAGES C CXX)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(SDL2 REQUIRED sdl2)
@@ -16,6 +16,9 @@ include_directories(
 
 add_executable(tiny-ui
     src/tiny_ui.cpp
+    src/tiny_handler.cpp
+    src/tiny_interface.cpp
+    src/tiny_vector.cpp
 )
 
 target_link_libraries(tiny-ui
