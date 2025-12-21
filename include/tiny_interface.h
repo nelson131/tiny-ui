@@ -8,6 +8,10 @@
 #include <string>
 #include <memory>
 
+// Interface class
+// Invisible(or visible if you want) basis of another modules
+// Creates, keeps and changes them all
+
 class TinyInterface {
     public:
     TinyInterface();

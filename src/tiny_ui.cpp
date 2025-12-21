@@ -25,7 +25,7 @@ void TinyUI::render(){
 }
 
 void TinyUI::clean_up(){
-    if(tiny_handler.free_all() == -1){
+    if(tiny_handler.free_all() < 0){
         Logger::print(Logger::ERROR, "Failed to free all interfaces");
     }
 }
@@ -39,7 +39,7 @@ TinyInterface* TinyUI::create_interface(Vector position, Vector size){
 
     TinyInterface* interface = new TinyInterface();
     interface->init(renderer, position, size);
-    
+
     if(add_interface(interface) == -1){
         free(interface);
         Logger::print(Logger::ERROR, "Failed to create a new interface");

@@ -5,6 +5,10 @@
 #include "tiny_logger.h"
 #include <vector>
 
+// Handler class
+// Keeps storage of interfaces
+// Given an access to all of them
+
 class TinyHandler {
     public:
     TinyHandler();

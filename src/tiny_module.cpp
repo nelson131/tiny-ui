@@ -2,7 +2,8 @@
 
 namespace TinyModule {
 
-    // Base struct -> 
+    // Base struct
+    // Basis of modules, inherited in other modules
 
     Base::Base(Vector pos = {}, Vector size = {})
         : local_position(pos), size(size)
@@ -34,7 +35,8 @@ namespace TinyModule {
         return 0;
     }
 
-    // Image module ->
+    // Image module
+    // Handles loading and rendering a texture image on the screen
 
     Image::Image(std::string texture_path, Vector position, Vector size)
         : Base(position, size),

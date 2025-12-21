@@ -7,6 +7,9 @@
 #include <SDL2/SDL.h>
 #include <string>
 
+// Modules class
+// Objects of UI
+
 namespace TinyModule {
 
     struct Base {

@@ -11,6 +11,8 @@
 #include <iostream>
 #include <sstream>
 
+// Logger class
+
 class Logger {
     
     public:

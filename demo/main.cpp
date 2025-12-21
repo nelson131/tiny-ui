@@ -13,7 +13,7 @@ int main(){
     SDL_Renderer* renderer = nullptr;
     bool is_running = true;
 
-    if(init_window(window, renderer) == -1) return -1;
+    if(init_window(window, renderer) < 0) return -1;
 
     TinyUI tiny_ui;
 
