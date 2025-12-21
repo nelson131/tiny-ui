@@ -28,6 +28,8 @@ int main(){
         tiny_ui.render();
     }
 
+    tiny_ui.clean_up();
+
     return 0;
 }
 

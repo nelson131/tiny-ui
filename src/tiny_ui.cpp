@@ -24,8 +24,10 @@ void TinyUI::render(){
     tiny_handler.render();
 }
 
-void TinyUI::free(){
-
+void TinyUI::clean_up(){
+    if(tiny_handler.free_all() == -1){
+        Logger::print(Logger::ERROR, "Failed to free all interfaces");
+    }
 }
 
 TinyInterface* TinyUI::create_interface(Vector position, Vector size){

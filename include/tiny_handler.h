@@ -11,10 +11,13 @@ class TinyHandler {
 
     void update();
     void render();
-    void free();
 
-    void add(TinyInterface* interface);
-    void remove(TinyInterface* interface);
+    int free(TinyInterface* interface);
+    int free_by_id(size_t id);
+    int free_all();
+    
+    int add(TinyInterface* interface);
+    int remove(TinyInterface* interface);
     int contains(TinyInterface* interface);
 
     int get_unique_id();

@@ -14,7 +14,10 @@ class TinyUI {
     void init(SDL_Renderer* renderer, size_t window_width, size_t window_height);
     void update();
     void render();
-    void free();
+    
+    void free(TinyInterface* interface);
+    void free_by_id(size_t id);
+    void clean_up();
 
     TinyInterface* create_interface(Vector position, Vector size);
 
