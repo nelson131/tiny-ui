@@ -21,6 +21,11 @@ class TinyUI {
 
     TinyInterface* create_interface(Vector position, Vector size);
 
+    int add_interface(TinyInterface* interface);
+    int remove_interface(TinyInterface* interface);
+    int contains_interface(TinyInterface* interface);
+    TinyInterface* get_interface(size_t id);
+
     private:
     TinyHandler tiny_handler;
 

@@ -19,6 +19,7 @@ class TinyHandler {
     int add(TinyInterface* interface);
     int remove(TinyInterface* interface);
     int contains(TinyInterface* interface);
+    TinyInterface* get(size_t id);
 
     int get_unique_id();
 

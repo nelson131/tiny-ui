@@ -10,7 +10,7 @@
 namespace TinyModule {
 
     struct Base {
-        Base();
+        Base(Vector pos = {}, Vector size = {});
         virtual ~Base();
 
         SDL_Renderer* renderer = nullptr;
@@ -24,7 +24,7 @@ namespace TinyModule {
 
         bool visible = false;
 
-        virtual void init(SDL_Renderer* renderer, TinyInterface* relative_inf, Vector position, Vector size);
+        virtual int init(SDL_Renderer* renderer, TinyInterface* relative_inf);
         virtual void update();
         virtual void render();
 
@@ -32,10 +32,11 @@ namespace TinyModule {
     };
 
     struct Image : public Base {
+        Image(std::string texture, Vector position, Vector size);
         std::string texture_path = "";
         SDL_Texture* texture = nullptr;
 
-        void init(SDL_Renderer* renderer, TinyInterface* relative_inf, Vector position, Vector size) override;
+        int init(SDL_Renderer* renderer, TinyInterface* relative_inf) override;
         void update() override;
         void render() override;
 

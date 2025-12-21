@@ -4,16 +4,18 @@ namespace TinyModule {
 
     // Base struct -> 
 
-    Base::Base(){};
+    Base::Base(Vector pos = {}, Vector size = {})
+        : local_position(pos), size(size)
+    {};
     Base::~Base() = default;
 
-    void Base::init(SDL_Renderer* renderer, TinyInterface* relative_inf, Vector position, Vector size){};
+    int Base::init(SDL_Renderer* renderer, TinyInterface* relative_inf){};
     void Base::update(){};
     void Base::render(){};
 
     int Base::load_rects(Vector* size){
         float x = 0, y = 0;
-        if(size){
+        if(!size){
             x = this->size.x;
             y = this->size.y;
         } else {
@@ -34,22 +36,28 @@ namespace TinyModule {
 
     // Image module ->
 
-    void Image::init(SDL_Renderer* renderer, TinyInterface* relative_inf, Vector position, Vector size){
+    Image::Image(std::string texture_path, Vector position, Vector size)
+        : Base(position, size),
+        texture_path(texture_path)
+    {}
+
+    int Image::init(SDL_Renderer* renderer, TinyInterface* relative_inf){
         this->renderer = renderer;
         this->relative_inf = relative_inf;
         this->relative_position = &relative_inf->position;
-        this->local_position = position;
-        this->size = size;
 
         if((*relative_position).x + local_position.x > size.x || (*relative_position).y + local_position.y > size.y){
             Logger::print(Logger::ERROR, "Failed to init image module cause the position is beyond the size limits");
-            return;
+            return -1;
         }
 
         texture = TinyTexture::load(texture_path, renderer);
-        if(load_rects(nullptr) == -1){
+        if(load_rects(nullptr) < 0){
             Logger::print(Logger::ERROR, "Failed to load rects in image module");
+            return -1;
         }
+
+        return 0;
     }
 
     void Image::update(){

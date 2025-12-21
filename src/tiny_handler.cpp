@@ -37,11 +37,6 @@ int TinyHandler::free(TinyInterface* interface){
 }
 
 int TinyHandler::free_by_id(size_t id){
-    if(id < 0){
-        Logger::print(Logger::ERROR, "interface id < 0");
-        return -1;
-    }
-
     for(size_t i = 0; i < stash.size(); i++){
         TinyInterface* interface = stash[i];
         if(interface->id == id){
@@ -103,6 +98,16 @@ int TinyHandler::contains(TinyInterface* interface){
         if(stash[i] == interface) return i;
     }
     return -1;
+}
+
+TinyInterface* TinyHandler::get(size_t id){
+    for(size_t i = 0; i < stash.size(); i++){
+        if(stash[i]->id == id){
+            return stash[i];
+        }
+    }
+
+    return nullptr;
 }
 
 int TinyHandler::get_unique_id(){

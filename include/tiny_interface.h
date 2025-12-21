@@ -12,14 +12,17 @@ class TinyInterface {
     public:
     TinyInterface();
 
-    void init(SDL_Renderer* renderer, Vector position, Vector size);
-    void update();
-    void render();
-
     Vector position = {0, 0};
     Vector size = {0, 0};
     int id = -1;
     bool visible = false;
+
+    void init(SDL_Renderer* renderer, Vector position, Vector size);
+    void update();
+    void render();
+
+    template<typename T, typename... Args>
+    T* create_module(Args&&... args);
 
     bool operator == (const TinyInterface& other);
 

@@ -31,8 +31,38 @@ void TinyUI::clean_up(){
 }
 
 TinyInterface* TinyUI::create_interface(Vector position, Vector size){
+    if(!renderer){
+        Logger::print(Logger::ERROR, "Failed to create a new interface");
+        Logger::print(Logger::ERROR, "Renderer is nullptr");
+        return nullptr;
+    }
+
     TinyInterface* interface = new TinyInterface();
     interface->init(renderer, position, size);
+    
+    if(add_interface(interface) == -1){
+        free(interface);
+        Logger::print(Logger::ERROR, "Failed to create a new interface");
+        return nullptr;
+    }
 
-    tiny_handler.add(interface);
+    return interface;
+}
+
+int TinyUI::add_interface(TinyInterface* interface){
+    return tiny_handler.add(interface);
+}
+
+int TinyUI::remove_interface(TinyInterface* interface){
+    return tiny_handler.remove(interface);
+}
+
+int TinyUI::contains_interface(TinyInterface* interface){
+    return tiny_handler.contains(interface);
+}
+
+TinyInterface* TinyUI::get_interface(size_t id){
+    TinyInterface* interface = tiny_handler.get(id);
+    if(!interface) Logger::print(Logger::ERROR, "Failed to get interface by id");
+    return interface;
 }
