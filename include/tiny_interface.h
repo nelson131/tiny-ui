@@ -12,7 +12,7 @@ class TinyInterface {
     public:
     TinyInterface();
 
-    void init(SDL_Renderer* renderer, Vector position, Vector size, bool visible);
+    void init(SDL_Renderer* renderer, Vector position, Vector size);
     void update();
     void render();
 

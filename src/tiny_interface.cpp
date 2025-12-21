@@ -5,11 +5,10 @@ TinyInterface::TinyInterface(){
     
 }
 
-void TinyInterface::init(SDL_Renderer* renderer, Vector position, Vector size, bool visible){
+void TinyInterface::init(SDL_Renderer* renderer, Vector position, Vector size){
     this->renderer = renderer;
     this->position = position;
     this->size = size;
-    this->visible = visible;
 }
 
 void TinyInterface::update(){
@@ -19,7 +18,6 @@ void TinyInterface::update(){
 void TinyInterface::render(){
 
 }
-
 
 bool TinyInterface::operator == (const TinyInterface& other){
     return this->id == other.id;

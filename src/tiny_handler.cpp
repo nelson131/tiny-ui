@@ -5,12 +5,31 @@ TinyHandler::TinyHandler(){
 
 }
 
-void TinyHandler::add(TinyInterface interface){
-    interface.id = get_unique_id();
+void TinyHandler::update(){
+    for(size_t i = 0; i < stash.size(); i++){
+        stash[i]->update();
+    }
+}
+
+void TinyHandler::render(){
+    for(size_t i = 0; i < stash.size(); i++){
+        stash[i]->render();
+    }
+}
+
+void TinyHandler::free(){
+    for(size_t i = 0; i < stash.size(); i++){
+        delete stash[i];
+        stash[i] = nullptr;
+    }
+}
+
+void TinyHandler::add(TinyInterface* interface){
+    interface->id = get_unique_id();
     stash.push_back(interface);
 }
 
-void TinyHandler::remove(TinyInterface interface){
+void TinyHandler::remove(TinyInterface* interface){
     int index = contains(interface);
     if(index < 0){
         Logger::print(Logger::ERROR, "Failed to remove inteface from tiny holder.");
@@ -20,7 +39,7 @@ void TinyHandler::remove(TinyInterface interface){
     stash.erase(stash.begin() + index);
 }
 
-int TinyHandler::contains(TinyInterface& interface){
+int TinyHandler::contains(TinyInterface* interface){
     for(size_t i = 0; i < stash.size(); i++){
         if(stash[i] == interface) return i;
     }
@@ -32,8 +51,8 @@ int TinyHandler::get_unique_id(){
     
     int unique = 1;
     for(size_t i = 0; i < stash.size(); i++){
-        if(stash[i].id > unique){
-            unique = stash[i].id;
+        if(stash[i]->id > unique){
+            unique = stash[i]->id;
         }
     }
 

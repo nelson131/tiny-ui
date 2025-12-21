@@ -9,14 +9,18 @@ class TinyHandler {
     public:
     TinyHandler();
 
-    void add(TinyInterface interface);
-    void remove(TinyInterface interface);
-    int contains(TinyInterface& interface);
+    void update();
+    void render();
+    void free();
+
+    void add(TinyInterface* interface);
+    void remove(TinyInterface* interface);
+    int contains(TinyInterface* interface);
 
     int get_unique_id();
 
     private:
-    std::vector<TinyInterface> stash;
+    std::vector<TinyInterface*> stash;
 };
 
 #endif
