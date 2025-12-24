@@ -15,20 +15,30 @@ int main(){
 
     if(init_window(window, renderer) < 0) return -1;
 
-    TinyUI tiny_ui;
-
-    tiny_ui.init(renderer, WINDOW_WIDTH, WINDOW_HEIGHT);
+    // Initialize the TinyUI >>>
+    TinyUI tiny_ui; // Creating an tiny ui main object
+    tiny_ui.init(renderer, WINDOW_WIDTH, WINDOW_HEIGHT); // Initializing the renderer and window size
     
-    Vector position = {100, 100};
+    // Create the Tiny Interface >>>
+    Vector position = {100, 100}; // Using vector struct
     Vector size = {200, 200};
-    TinyInterface* interface = tiny_ui.create_interface(position, size);
+    TinyInterface* interface = tiny_ui.create_interface(position, size); // Creating an interface
 
+    // Add a module to interface >>>
+    auto image_module = interface->create_module<TinyModule::Image>( // Creating a module
+        // Unique arguments for this module
+        "texture", // -> path to texture
+        position, // -> position relative to interface position
+        size // -> size of module, cant be bigger than interface ofc
+    );
+
+    // Main loop of your program
     while(is_running){
-        tiny_ui.update();
-        tiny_ui.render();
+        tiny_ui.update(); // Updates tiny interfaces
+        tiny_ui.render(); // Render tiny interfaces
     }
 
-    tiny_ui.clean_up();
+    tiny_ui.clean_up(); // Free all interfaces, modules, etc
 
     return 0;
 }

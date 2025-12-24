@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10.0)
 set(CMAKE_CXX_COMPILER g++)
-project(tiny-ui VERSION 1.3.2 LANGUAGES C CXX)
+project(Ashborne VERSION 6.6.6 LANGUAGES C CXX)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(SDL2 REQUIRED sdl2)
@@ -14,14 +14,11 @@ include_directories(
     /usr/include/SDL2_ttf      
 )
 
-add_executable(tiny-ui
-    src/tiny_ui.cpp
-    src/tiny_handler.cpp
-    src/tiny_interface.cpp
-    src/tiny_vector.cpp
+add_executable(Demo
+    main.cpp
 )
 
-target_link_libraries(tiny-ui
+target_link_libraries(Ashborne
     ${SDL2_LIBRARIES}
     SDL2_image
     ${SDL2_TTF_LIBRARIES}

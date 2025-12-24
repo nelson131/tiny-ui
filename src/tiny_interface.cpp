@@ -6,17 +6,25 @@ TinyInterface::TinyInterface(){
 }
 
 void TinyInterface::init(SDL_Renderer* renderer, Vector position, Vector size){
-    this->renderer = renderer;
+    if(!renderer){
+        Logger::print(Logger::ERROR, "Failed to load renderer in the interface (ID:", id, ")");
+    } else {
+        this->renderer = renderer;
+    }
     this->position = position;
     this->size = size;
 }
 
 void TinyInterface::update(){
-
+    for(size_t i = 0; i < stash_modules.size(); i++){
+        stash_modules[i]->update();
+    }
 }
 
 void TinyInterface::render(){
-
+    for(size_t i = 0; i < stash_modules.size(); i++){
+        stash_modules[i]->render();
+    }
 }
 
 template<typename T, typename... Args>
