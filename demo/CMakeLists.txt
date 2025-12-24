@@ -1,25 +1,12 @@
-cmake_minimum_required(VERSION 3.10.0)
-set(CMAKE_CXX_COMPILER g++)
-project(Demo VERSION 6.6.6 LANGUAGES C CXX)
+cmake_minimum_required(VERSION 3.10)
+project(Demo LANGUAGES CXX)
 
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(SDL2 REQUIRED sdl2)
-pkg_check_modules(SDL2_IMAGE REQUIRED SDL2_image)
-pkg_check_modules(SDL2_TTF REQUIRED SDL2_ttf)
-
-include_directories(
-    ${SDL2_INCLUDE_DIRS}
-    /usr/include/SDL2
-    ${SDL2_TTF_INCLUDE_DIRS}
-    /usr/include/SDL2_ttf      
-)
+add_subdirectory(.. tiny-ui-build)
 
 add_executable(Demo
     main.cpp
 )
 
 target_link_libraries(Demo
-    ${SDL2_LIBRARIES}
-    SDL2_image
-    ${SDL2_TTF_LIBRARIES}
+    PRIVATE tiny-ui
 )

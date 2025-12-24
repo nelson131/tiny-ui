@@ -22,4 +22,6 @@ int Text::create(std::string font_path, std::string content){
         Logger::print(Logger::ERROR, "Failed to load surface in text creating: ", content);
         return -1;
     }
+
+    return 0;
 }

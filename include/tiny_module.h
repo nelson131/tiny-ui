@@ -1,7 +1,6 @@
 #ifndef TINY_MODULE_H
 #define TINY_MODULE_H
 
-#include "tiny_interface.h"
 #include "tiny_vector.h"
 #include "tiny_texture.h"
 #include <SDL2/SDL.h>
@@ -9,6 +8,8 @@
 
 // Modules class
 // Objects of UI
+
+struct TinyInterface;
 
 namespace TinyModule {
 

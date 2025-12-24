@@ -1,19 +1,18 @@
-#include "./include/tiny_ui.h"
-
 #include <iostream>
+#include <tiny_ui.h>
 #include <SDL2/SDL.h>
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
 
-int init_window(SDL_Window* window, SDL_Renderer* renderer);
+int init_window(SDL_Window** window, SDL_Renderer** renderer);
 
 int main(){
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
     bool is_running = true;
 
-    if(init_window(window, renderer) < 0) return -1;
+    if(init_window(&window, &renderer) < 0) return -1;
 
     // Initialize the TinyUI >>>
     TinyUI tiny_ui; // Creating an tiny ui main object
@@ -40,13 +39,17 @@ int main(){
 
     tiny_ui.clean_up(); // Free all interfaces, modules, etc
 
+    SDL_DestroyWindow(window);
+    SDL_DestroyRenderer(renderer);
+    SDL_Quit();
+
     return 0;
 }
 
-int init_window(SDL_Window* window, SDL_Renderer* renderer){
+int init_window(SDL_Window** window, SDL_Renderer** renderer){
     SDL_Init(SDL_INIT_EVERYTHING);
 
-    window = SDL_CreateWindow(
+    *window = SDL_CreateWindow(
         "Demo",
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
@@ -55,8 +58,11 @@ int init_window(SDL_Window* window, SDL_Renderer* renderer){
         0
     );
 
-    renderer = SDL_CreateRenderer(window, -1, 0);
-    if(!renderer) return -1;
+    *renderer = SDL_CreateRenderer(*window, -1, 0);
+    if(!renderer){
+        std::cout << "renderer is nullptr guys" << std::endl;
+        return -1;
+    }
 
     return 0;
 }

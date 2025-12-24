@@ -1,16 +1,17 @@
 #include "../include/tiny_module.h"
+#include "../include/tiny_interface.h"
 
 namespace TinyModule {
 
     // Base struct
     // Basis of modules, inherited in other modules
 
-    Base::Base(Vector pos = {}, Vector size = {})
+    Base::Base(Vector pos, Vector size)
         : local_position(pos), size(size)
     {};
     Base::~Base() = default;
 
-    int Base::init(SDL_Renderer* renderer, TinyInterface* relative_inf){};
+    int Base::init(SDL_Renderer* renderer, TinyInterface* relative_inf){ return 0; };
     void Base::update(){};
     void Base::render(){};
 
@@ -104,6 +105,8 @@ namespace TinyModule {
             Logger::print(Logger::ERROR, "Failed to init text module cause the position is beyond the size limits");
             return -1;
         }
+
+        return 0;
     }
 
     void Text::update(){
