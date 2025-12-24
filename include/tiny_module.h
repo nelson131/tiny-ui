@@ -46,6 +46,15 @@ namespace TinyModule {
         void load();
     };
 
+    struct Text : public Base {
+        Text(std::string font_path, std::string content, Vector position, Vector size);
+        std::string font_path = "";
+        std::string content = "";
+
+        int init(SDL_Renderer* renderer, TinyInterface* relative_inf) override;
+        void update() override;
+        void render() override;
+    };
 };
 
 #endif

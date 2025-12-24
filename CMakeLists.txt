@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10.0)
 set(CMAKE_CXX_COMPILER g++)
-project(tiny-ui VERSION 1.3.2 LANGUAGES C CXX)
+project(tiny-ui VERSION 1.3.3 LANGUAGES C CXX)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(SDL2 REQUIRED sdl2)

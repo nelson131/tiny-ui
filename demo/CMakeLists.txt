@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10.0)
 set(CMAKE_CXX_COMPILER g++)
-project(Ashborne VERSION 6.6.6 LANGUAGES C CXX)
+project(Demo VERSION 6.6.6 LANGUAGES C CXX)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(SDL2 REQUIRED sdl2)
@@ -18,7 +18,7 @@ add_executable(Demo
     main.cpp
 )
 
-target_link_libraries(Ashborne
+target_link_libraries(Demo
     ${SDL2_LIBRARIES}
     SDL2_image
     ${SDL2_TTF_LIBRARIES}

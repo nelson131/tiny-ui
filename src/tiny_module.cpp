@@ -44,6 +44,14 @@ namespace TinyModule {
     {}
 
     int Image::init(SDL_Renderer* renderer, TinyInterface* relative_inf){
+        if(!renderer){
+            Logger::print(Logger::ERROR, "Failed to init image module cause the renderer is nullptr");
+            return -1;
+        }
+        if(!relative_inf){
+            Logger::print(Logger::ERROR, "Failed to init image module cause the relative interface is nullptr");
+            return -1;
+        }
         this->renderer = renderer;
         this->relative_inf = relative_inf;
         this->relative_position = &relative_inf->position;
@@ -73,4 +81,37 @@ namespace TinyModule {
     void Image::render(){
         SDL_RenderCopy(renderer, texture, &src_rect, &dest_rect);      
     }
+
+    Text::Text(std::string font_path, std::string content, Vector position, Vector size)
+        : Base(position, size), 
+        font_path(font_path), content(content)
+    {}
+
+    int Text::init(SDL_Renderer* renderer, TinyInterface* relative_inf){
+        if(!renderer){
+            Logger::print(Logger::ERROR, "Failed to init text module cause the renderer is nullptr");
+            return -1;
+        }
+        if(!relative_inf){
+            Logger::print(Logger::ERROR, "Failed to init text module cause the relative interface is nullptr");
+            return -1;
+        }
+        
+        this->renderer = renderer;
+        this->relative_inf = relative_inf;
+        this->relative_position = &relative_inf->position;
+        if((*relative_position).x + local_position.x > size.x || (*relative_position).y + local_position.y > size.y){
+            Logger::print(Logger::ERROR, "Failed to init text module cause the position is beyond the size limits");
+            return -1;
+        }
+    }
+
+    void Text::update(){
+
+    }
+
+    void Text::render(){
+
+    }
+    
 };
