@@ -6,12 +6,16 @@
 #define WINDOW_HEIGHT 720
 
 int init_window(SDL_Window** window, SDL_Renderer** renderer);
+void handle_event(SDL_Event& event, bool& is_running);
 
 int main(){
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
+    SDL_Event event;
     bool is_running = true;
 
+    SDL_SetHint(SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING, "1");
+    atexit(SDL_Quit);
     if(init_window(&window, &renderer) < 0) return -1;
 
     // Initialize the TinyUI >>>
@@ -26,15 +30,23 @@ int main(){
     // Add a module to interface >>>
     auto image_module = interface->create_module<TinyModule::Image>( // Creating a module
         // Unique arguments for this module
-        "texture", // -> path to texture
+        "assets/rabbit.jpg", // -> path to texture
         position, // -> position relative to interface position
         size // -> size of module, cant be bigger than interface ofc
     );
 
     // Main loop of your program
     while(is_running){
-        tiny_ui.update(); // Updates tiny interfaces
+        // Event logic >>>
+        handle_event(event, is_running);
+        // Update logic >>>
+        tiny_ui.update(); // Update tiny interfaces
+        // Render logic >>>
+        SDL_RenderClear(renderer);
+
         tiny_ui.render(); // Render tiny interfaces
+
+        SDL_RenderPresent(renderer);
     }
 
     tiny_ui.clean_up(); // Free all interfaces, modules, etc
@@ -65,4 +77,16 @@ int init_window(SDL_Window** window, SDL_Renderer** renderer){
     }
 
     return 0;
+}
+
+void handle_event(SDL_Event& event, bool& is_running){
+    while(SDL_PollEvent(&event)){
+        switch(event.type){
+            case SDL_QUIT:
+                is_running = false;
+                break;
+            default:
+                break;
+        }
+    }
 }

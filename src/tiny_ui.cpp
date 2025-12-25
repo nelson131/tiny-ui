@@ -14,6 +14,8 @@ void TinyUI::init(SDL_Renderer* renderer, size_t window_width, size_t window_hei
     this->renderer = renderer;
     this->window_width = window_width;
     this->window_height = window_height;
+
+    Logger::print(Logger::SUCCESS, "TinyUI was initialized.");
 }
 
 void TinyUI::update(){
@@ -50,6 +52,7 @@ TinyInterface* TinyUI::create_interface(Vector position, Vector size){
         return nullptr;
     }
 
+    Logger::print(Logger::SUCCESS, "Tiny Interface (ID:", interface->id, ") was initialized.");
     return interface;
 }
 

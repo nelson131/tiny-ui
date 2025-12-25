@@ -10,7 +10,7 @@ class TinyTexture {
     public:
     static SDL_Texture* load(std::string path, SDL_Renderer* renderer){
         SDL_Surface* surface = IMG_Load(path.c_str());
-        if(surface){
+        if(!surface){
             Logger::print(Logger::ERROR, "Failed to load surface in texture manager -> ", path);
             return nullptr;
         }

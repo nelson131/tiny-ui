@@ -10,3 +10,7 @@ add_executable(Demo
 target_link_libraries(Demo
     PRIVATE tiny-ui
 )
+
+add_custom_command(TARGET Demo POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_SOURCE_DIR}/assets $<TARGET_FILE_DIR:Demo>/assets)
