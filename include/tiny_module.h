@@ -62,6 +62,7 @@ namespace TinyModule {
         int init(SDL_Renderer* renderer, TinyInterface* relative_inf, size_t id) override;
         void update() override;
         void render() override;
+        int free() override;
     };
 };
 

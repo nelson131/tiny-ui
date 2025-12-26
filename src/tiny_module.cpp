@@ -119,11 +119,19 @@ namespace TinyModule {
     }
 
     void Text::update(){
-        
+        global_position.x = (*relative_position).x + local_position.x;
+        global_position.y = (*relative_position).y + local_position.y;
+
+        dest_rect.x = global_position.x;
+        dest_rect.y = global_position.y;
+        text.update(dest_rect);
     }
 
     void Text::render(){
         text.render();
     }
     
+    int Text::free(){
+        return text.clear();
+    }
 };

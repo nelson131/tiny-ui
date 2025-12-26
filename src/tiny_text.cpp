@@ -41,6 +41,26 @@ int TinyText::create(SDL_Renderer* renderer, const char* font_path, std::string 
     return 0;
 }
 
+void TinyText::update(SDL_Rect& rect){
+    this->rect.x = rect.x;
+    this->rect.y = rect.y;
+}
+
 void TinyText::render(){
     SDL_RenderCopy(renderer, texture, NULL, &rect);
+}
+
+int TinyText::clear(){
+    if(texture){
+        SDL_DestroyTexture(texture);
+        texture = nullptr;
+    }
+
+    if(font){
+        TTF_CloseFont(font);
+        font = nullptr;
+    }
+
+    TTF_Quit();
+    return 0;
 }

@@ -27,12 +27,25 @@ int main(){
     Vector size = {600, 700};
     TinyInterface* interface = tiny_ui.create_interface(position, size); // Creating an interface
 
-    // Add a module to interface >>>
+    /*
+    All types of TinyUI Modules.
+    Created with func -> create_module<TinyModule::Type>(arguments)
+    */
+
+    // Image Module >>>
     auto image_module = interface->create_module<TinyModule::Image>( // Creating a module
         // Unique arguments for this module
         "assets/rabbit.jpg", // -> path to texture
         position, // -> position relative to interface position
         size // -> size of module, cant be bigger than interface ofc
+    );
+
+    // Text Module >>>
+    auto text_module = interface->create_module<TinyModule::Text>(
+        "assets/font.ttf",
+        "HalfLife 3 confirmed",
+        position,
+        size
     );
 
     // Main loop of your program

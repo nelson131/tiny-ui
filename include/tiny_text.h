@@ -14,7 +14,7 @@ class TinyText {
     Vector position = {0, 0};
 
     int create(SDL_Renderer* renderer, const char* font_path, std::string content);
-    void update(Vector* position);
+    void update(SDL_Rect& rect);
     void render();
     int clear();
 
