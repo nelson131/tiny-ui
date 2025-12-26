@@ -23,8 +23,8 @@ int main(){
     tiny_ui.init(renderer, WINDOW_WIDTH, WINDOW_HEIGHT); // Initializing the renderer and window size
     
     // Create the Tiny Interface >>>
-    Vector position = {100, 100}; // Using vector struct
-    Vector size = {200, 200};
+    Vector position = {0, 0}; // Using vector struct
+    Vector size = {600, 700};
     TinyInterface* interface = tiny_ui.create_interface(position, size); // Creating an interface
 
     // Add a module to interface >>>

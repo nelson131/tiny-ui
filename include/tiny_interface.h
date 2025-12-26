@@ -21,7 +21,7 @@ class TinyInterface {
     int id = -1;
     bool visible = false;
 
-    void init(SDL_Renderer* renderer, Vector position, Vector size);
+    int init(SDL_Renderer* renderer, Vector position, Vector size);
     void update();
     void render();
 
@@ -30,7 +30,7 @@ class TinyInterface {
         static_assert(std::is_base_of_v<TinyModule::Base, T>, "T must be part of TinyModule::Base");
 
         auto module = std::make_unique<T>(std::forward<Args>(args)...);
-        if(module->init(renderer, this) < 0){
+        if(module->init(renderer, this, get_unique_id()) < 0){
             Logger::print(Logger::ERROR, "Failed to create a module (InterfaceID:", id, ")");
             return nullptr;
         }
@@ -43,6 +43,8 @@ class TinyInterface {
     bool operator == (const TinyInterface& other);
 
     private:
+    size_t get_unique_id();
+
     std::vector<std::unique_ptr<TinyModule::Base>> stash_modules;
 
     SDL_Renderer* renderer = nullptr;

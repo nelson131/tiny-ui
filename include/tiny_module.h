@@ -1,6 +1,7 @@
 #ifndef TINY_MODULE_H
 #define TINY_MODULE_H
 
+#include "tiny_text.h"
 #include "tiny_vector.h"
 #include "tiny_texture.h"
 #include <SDL2/SDL.h>
@@ -21,6 +22,8 @@ namespace TinyModule {
         TinyInterface* relative_inf = nullptr;
         Vector* relative_position = nullptr;
 
+        size_t id = -1;
+
         Vector global_position = {0, 0};
         Vector local_position = {0, 0};
         Vector size = {0, 0};
@@ -28,10 +31,12 @@ namespace TinyModule {
 
         bool visible = false;
 
-        virtual int init(SDL_Renderer* renderer, TinyInterface* relative_inf);
+        virtual int init(SDL_Renderer* renderer, TinyInterface* relative_inf, size_t id);
         virtual void update();
         virtual void render();
+        virtual int free();
 
+        int setup(SDL_Renderer* renderer, TinyInterface* relative_inf, std::string module_name, size_t id);
         int load_rects(Vector* size);
     };
 
@@ -40,19 +45,21 @@ namespace TinyModule {
         std::string texture_path = "";
         SDL_Texture* texture = nullptr;
 
-        int init(SDL_Renderer* renderer, TinyInterface* relative_inf) override;
+        int init(SDL_Renderer* renderer, TinyInterface* relative_inf, size_t id) override;
         void update() override;
         void render() override;
+        int free() override;
 
         void load();
     };
 
     struct Text : public Base {
         Text(std::string font_path, std::string content, Vector position, Vector size);
+        TinyText text;
         std::string font_path = "";
         std::string content = "";
 
-        int init(SDL_Renderer* renderer, TinyInterface* relative_inf) override;
+        int init(SDL_Renderer* renderer, TinyInterface* relative_inf, size_t id) override;
         void update() override;
         void render() override;
     };

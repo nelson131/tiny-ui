@@ -1,17 +1,22 @@
 #include "../include/tiny_text.h"
 #include <iostream>
 
-Text::Text(){
+TinyText::TinyText(){
 
 }
 
-int Text::create(std::string font_path, std::string content){
+int TinyText::create(SDL_Renderer* renderer, const char* font_path, std::string content){
+    if(!renderer){
+        Logger::print(Logger::ERROR, "Renderer is nullptr in text create");
+        return -1;
+    } this->renderer = renderer;
+
     if(TTF_Init() == -1){
         Logger::print(Logger::ERROR, "TTF init failed: -1");
         return -1;
     }
 
-    font = TTF_OpenFont(font_path.c_str(), 15);
+    font = TTF_OpenFont(font_path, 15);
     if(!font){
         Logger::print(Logger::ERROR, "Failed to open font (path:", font_path, ")");
         return -1;   
@@ -23,5 +28,19 @@ int Text::create(std::string font_path, std::string content){
         return -1;
     }
 
+    if(texture){
+        SDL_DestroyTexture(texture);
+        texture = nullptr;
+    }
+
+    texture = SDL_CreateTextureFromSurface(renderer, surface);
+    rect.w = surface->w;
+    rect.h = surface->h;
+    SDL_FreeSurface(surface);
+
     return 0;
+}
+
+void TinyText::render(){
+    SDL_RenderCopy(renderer, texture, NULL, &rect);
 }
