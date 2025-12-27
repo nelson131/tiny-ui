@@ -26,16 +26,6 @@ void TinyUI::render(){
     tiny_handler.render();
 }
 
-void TinyUI::free(TinyInterface* interface){
-    tiny_handler.free(interface);
-}
-
-void TinyUI::clean_up(){
-    if(tiny_handler.free_all() < 0){
-        Logger::print(Logger::ERROR, "Failed to free all interfaces");
-    }
-}
-
 TinyInterface* TinyUI::create_interface(Vector position, Vector size){
     if(!renderer){
         Logger::print(Logger::ERROR, "Failed to create a new interface");
@@ -46,8 +36,8 @@ TinyInterface* TinyUI::create_interface(Vector position, Vector size){
     TinyInterface* interface = new TinyInterface();
     interface->init(renderer, position, size);
 
-    if(add_interface(interface) == -1){
-        free(interface);
+    if(tiny_handler.add(interface) < 0){
+        delete interface;
         Logger::print(Logger::ERROR, "Failed to create a new interface");
         return nullptr;
     }
@@ -56,12 +46,24 @@ TinyInterface* TinyUI::create_interface(Vector position, Vector size){
     return interface;
 }
 
-int TinyUI::add_interface(TinyInterface* interface){
-    return tiny_handler.add(interface);
+int TinyUI::delete_interface(TinyInterface* interface){
+    if(!interface){
+        Logger::print(Logger::ERROR, "Failed to delete interface: nullptr");
+        return -1;
+    }
+    if(tiny_handler.remove(interface) < 0){
+        Logger::print(Logger::ERROR, "Failed to delete interface (ID:", interface->id, ")");
+        return -1;
+    }
+    return 0;
 }
 
-int TinyUI::remove_interface(TinyInterface* interface){
-    return tiny_handler.remove(interface);
+int TinyUI::delete_interface_by_id(size_t id){
+    if(tiny_handler.remove_by_id(id) < 0){
+        Logger::print(Logger::ERROR, "Failed to delete interface (ID:", id, ") by id");
+        return -1;
+    }
+    return 0;
 }
 
 int TinyUI::contains_interface(TinyInterface* interface){
@@ -72,4 +74,8 @@ TinyInterface* TinyUI::get_interface(size_t id){
     TinyInterface* interface = tiny_handler.get(id);
     if(!interface) Logger::print(Logger::ERROR, "Failed to get interface by id");
     return interface;
+}
+
+void TinyUI::clean_up(){
+    tiny_handler.remove_all();
 }

@@ -17,55 +17,6 @@ void TinyHandler::render(){
     }
 }
 
-int TinyHandler::free(TinyInterface* interface){
-    if(!interface){
-        Logger::print(Logger::ERROR, "interface argument is nullptr");
-        return -1;
-    }
-
-    for(size_t i = 0; i < stash.size(); i++){
-        TinyInterface* stash_interface = stash[i];
-        if(interface == stash_interface){
-            delete interface;
-            interface = nullptr;
-            stash.erase(stash.begin() + i);
-            return 0;
-        }
-    }
-    Logger::print(Logger::ERROR, "Couldnt find interface in the stash");
-    return -1;
-}
-
-int TinyHandler::free_by_id(size_t id){
-    for(size_t i = 0; i < stash.size(); i++){
-        TinyInterface* interface = stash[i];
-        if(interface->id == id){
-            delete interface;
-            interface = nullptr;
-            stash.erase(stash.begin() + i);
-            return 0;
-        }
-    }
-    Logger::print(Logger::ERROR, "Couldnt find interface in the stash");
-    return -1;
-}
-
-int TinyHandler::free_all(){
-    for(size_t i = 0; i < stash.size(); i++){
-        TinyInterface* interface = stash[i];
-        delete interface;
-        interface = nullptr;
-        stash.erase(stash.begin() + i);
-    }
-
-    if(stash.size() != 0){
-        Logger::print(Logger::ERROR, "Stash is not empty");
-        return -1;
-    }
-
-    return 0;
-}
-
 int TinyHandler::add(TinyInterface* interface){
     if(!interface){
         Logger::print(Logger::ERROR, "interface argument is nullptr");
@@ -77,23 +28,12 @@ int TinyHandler::add(TinyInterface* interface){
     return 0;
 }
 
-int TinyHandler::remove(TinyInterface* interface){
-    if(!interface){
-        Logger::print(Logger::ERROR, "interface argument is nullptr");
-        return -1;
-    }
-
-    int index = contains(interface);
-    if(index < 0){
-        Logger::print(Logger::ERROR, "Failed to remove inteface from tiny holder.");
-        return -1;
-    }
-
-    stash.erase(stash.begin() + index);
-    return 0;
-}
-
 int TinyHandler::contains(TinyInterface* interface){
+    if(!interface){
+        Logger::print(Logger::ERROR, "Interface is nullptr. Failed to find it in stash");
+        return -1;
+    }
+
     for(size_t i = 0; i < stash.size(); i++){
         if(stash[i] == interface) return i;
     }
@@ -108,6 +48,45 @@ TinyInterface* TinyHandler::get(size_t id){
     }
 
     return nullptr;
+}
+
+int TinyHandler::remove(TinyInterface* interface){
+    if(!interface){
+        Logger::print(Logger::ERROR, "interface argument is nullptr");
+        return -1;
+    }
+
+    for(size_t i = 0; i < stash.size(); i++){
+        if(stash[i] == interface){
+            delete stash[i];
+            stash.erase(stash.begin() + i);
+            return 0;
+        }
+    }
+    Logger::print(Logger::ERROR, "Failed to find interface (ID:", interface->id, ") to remove");
+    return -1;
+}
+
+int TinyHandler::remove_by_id(size_t id){
+    for(size_t i = 0; i < stash.size(); i++){
+        if(stash[i]->id == id){
+            delete stash[i];
+            stash.erase(stash.begin() + i);
+            return 0;
+        }
+    }
+    Logger::print(Logger::ERROR, "Failed to find interface (ID:", id, ") to remove");
+    return -1;
+}
+
+int TinyHandler::remove_all(){
+    for(size_t i = 0; i < stash.size(); i++){
+        if(!stash[i]) continue;
+        delete stash[i];
+    }
+
+    stash.clear();
+    return 0;
 }
 
 int TinyHandler::get_unique_id(){

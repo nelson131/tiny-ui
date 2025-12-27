@@ -34,7 +34,6 @@ namespace TinyModule {
         virtual int init(SDL_Renderer* renderer, TinyInterface* relative_inf, size_t id);
         virtual void update();
         virtual void render();
-        virtual int free();
 
         int setup(SDL_Renderer* renderer, TinyInterface* relative_inf, std::string module_name, size_t id);
         int load_rects(Vector* size);
@@ -42,19 +41,20 @@ namespace TinyModule {
 
     struct Image : public Base {
         Image(std::string texture, Vector position, Vector size);
+        ~Image();
         std::string texture_path = "";
         SDL_Texture* texture = nullptr;
 
         int init(SDL_Renderer* renderer, TinyInterface* relative_inf, size_t id) override;
         void update() override;
         void render() override;
-        int free() override;
 
         void load();
     };
 
     struct Text : public Base {
         Text(std::string font_path, std::string content, Vector position, Vector size);
+        ~Text();
         TinyText text;
         std::string font_path = "";
         std::string content = "";
@@ -62,7 +62,6 @@ namespace TinyModule {
         int init(SDL_Renderer* renderer, TinyInterface* relative_inf, size_t id) override;
         void update() override;
         void render() override;
-        int free() override;
     };
 };
 

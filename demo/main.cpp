@@ -62,7 +62,7 @@ int main(){
         SDL_RenderPresent(renderer);
     }
 
-    tiny_ui.clean_up(); // Free all interfaces, modules, etc
+    tiny_ui.clean_up(); // Clean up your program: deletes all interfaces
 
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);

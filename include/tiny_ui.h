@@ -14,17 +14,15 @@ class TinyUI {
     void init(SDL_Renderer* renderer, size_t window_width, size_t window_height);
     void update();
     void render();
-    
-    void free(TinyInterface* interface);
-    void free_by_id(size_t id);
-    void clean_up();
 
     TinyInterface* create_interface(Vector position, Vector size);
+    int delete_interface(TinyInterface* interface);
+    int delete_interface_by_id(size_t id);
 
-    int add_interface(TinyInterface* interface);
-    int remove_interface(TinyInterface* interface);
     int contains_interface(TinyInterface* interface);
     TinyInterface* get_interface(size_t id);
+
+    void clean_up();
 
     private:
     TinyHandler tiny_handler;

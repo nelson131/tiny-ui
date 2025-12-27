@@ -15,15 +15,14 @@ class TinyHandler {
 
     void update();
     void render();
-
-    int free(TinyInterface* interface);
-    int free_by_id(size_t id);
-    int free_all();
     
     int add(TinyInterface* interface);
-    int remove(TinyInterface* interface);
     int contains(TinyInterface* interface);
     TinyInterface* get(size_t id);
+
+    int remove(TinyInterface* interface);
+    int remove_by_id(size_t id);
+    int remove_all();
 
     int get_unique_id();
 

@@ -11,9 +11,11 @@ int TinyText::create(SDL_Renderer* renderer, const char* font_path, std::string 
         return -1;
     } this->renderer = renderer;
 
-    if(TTF_Init() == -1){
-        Logger::print(Logger::ERROR, "TTF init failed: -1");
-        return -1;
+    if(!TTF_WasInit()){
+        if(TTF_Init() == -1){
+            Logger::print(Logger::ERROR, "TTF init failed: -1");
+            return -1;
+        }
     }
 
     font = TTF_OpenFont(font_path, 15);

@@ -15,6 +15,7 @@
 class TinyInterface {
     public:
     TinyInterface();
+    ~TinyInterface();
 
     Vector position = {0, 0};
     Vector size = {0, 0};
@@ -39,6 +40,10 @@ class TinyInterface {
         stash_modules.push_back(std::move(module));
         return raw;
     }
+
+    int delete_module(TinyModule::Base* module);
+    int delete_module_by_id(size_t id);
+    int delete_all();
 
     bool operator == (const TinyInterface& other);
 

@@ -14,7 +14,6 @@ namespace TinyModule {
     int Base::init(SDL_Renderer* renderer, TinyInterface* relative_inf, size_t id){ return 0; };
     void Base::update(){};
     void Base::render(){};
-    int Base::free(){ return 0; };
 
     int Base::setup(SDL_Renderer* renderer, TinyInterface* relative_inf, std::string module_name, size_t id){
         if(!renderer){
@@ -72,6 +71,12 @@ namespace TinyModule {
         texture_path(texture_path)
     {}
 
+    Image::~Image(){
+        if(texture){
+            SDL_DestroyTexture(texture);
+        }
+    }
+
     int Image::init(SDL_Renderer* renderer, TinyInterface* relative_inf, size_t id){
         if(setup(renderer, relative_inf, "Image", id) < 0){
             Logger::print(Logger::ERROR, "Failed to setup image module");
@@ -94,18 +99,14 @@ namespace TinyModule {
         SDL_RenderCopy(renderer, texture, &src_rect, &dest_rect);      
     }
 
-    int Image::free(){
-        if(texture){
-            SDL_DestroyTexture(texture);
-            texture = nullptr;
-        }
-        return 0;   
-    }
-
     Text::Text(std::string font_path, std::string content, Vector position, Vector size)
         : Base(position, size), 
         font_path(font_path), content(content)
     {}
+
+    Text::~Text(){
+        text.clear();
+    }
 
     int Text::init(SDL_Renderer* renderer, TinyInterface* relative_inf, size_t id){
         if(setup(renderer, relative_inf, "Text", id) < 0){
@@ -129,9 +130,5 @@ namespace TinyModule {
 
     void Text::render(){
         text.render();
-    }
-    
-    int Text::free(){
-        return text.clear();
     }
 };
