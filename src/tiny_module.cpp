@@ -29,7 +29,7 @@ namespace TinyModule {
         this->relative_position = &relative_inf->position;
         this->id = id;
 
-        if((*relative_position).x + local_position.x > size.x || (*relative_position).y + local_position.y > size.y){
+        if(size.x > relative_inf->size.x || size.y > relative_inf->size.y){
             Logger::print(Logger::ERROR, "Failed to init ", module_name, " module cause the position is beyond the size limits");
             return -1;
         }

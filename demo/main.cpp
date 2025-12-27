@@ -23,7 +23,7 @@ int main(){
     tiny_ui.init(renderer, WINDOW_WIDTH, WINDOW_HEIGHT); // Initializing the renderer and window size
     
     // Create the Tiny Interface >>>
-    Vector position = {0, 0}; // Using vector struct
+    Vector position = {0, 0}; // Using vector struct from tiny_vector.h
     Vector size = {600, 700};
     TinyInterface* interface = tiny_ui.create_interface(position, size); // Creating an interface
 
@@ -33,19 +33,23 @@ int main(){
     */
 
     // Image Module >>>
+    Vector img_position = {100, 100}; // Using vector struct from tiny_vector.h
+    Vector img_size = {500, 300};
     auto image_module = interface->create_module<TinyModule::Image>( // Creating a module
         // Unique arguments for this module
         "assets/rabbit.jpg", // -> path to texture
-        position, // -> position relative to interface position
-        size // -> size of module, cant be bigger than interface ofc
+        img_position, // -> position relative to interface position
+        img_size // -> size of module, cant be bigger than interface ofc
     );
 
     // Text Module >>>
+    Vector txt_position = {100, 100}; // Using vector struct from tiny_vector.h
+    Vector txt_size = {300, 300};
     auto text_module = interface->create_module<TinyModule::Text>(
         "assets/font.ttf",
         "HalfLife 3 confirmed",
-        position,
-        size
+        txt_position,
+        txt_size
     );
 
     // Main loop of your program
