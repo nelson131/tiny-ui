@@ -33,13 +33,14 @@ int main(){
     */
 
     // Image Module >>>
-    Vector img_position = {100, 100}; // Using vector struct from tiny_vector.h
-    Vector img_size = {500, 300};
+    Vector img_position = {0, 0}; // Using vector struct from tiny_vector.h
+    Vector img_size = {200, 200};
     auto image_module = interface->create_module<TinyModule::Image>( // Creating a module
         // Unique arguments for this module
         "assets/rabbit.jpg", // -> path to texture
         img_position, // -> position relative to interface position
-        img_size // -> size of module, cant be bigger than interface ofc
+        img_size, // -> size of module, cant be bigger than interface ofc
+        true // -> image stretching <true/false>
     );
 
     // Text Module >>>

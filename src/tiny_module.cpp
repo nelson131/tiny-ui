@@ -66,9 +66,9 @@ namespace TinyModule {
     // Image module
     // Handles loading and rendering a texture image on the screen
 
-    Image::Image(std::string texture_path, Vector position, Vector size)
+    Image::Image(std::string texture_path, Vector position, Vector size, bool stretch)
         : Base(position, size),
-        texture_path(texture_path)
+        texture_path(texture_path), stretch(stretch)
     {}
 
     Image::~Image(){
@@ -82,7 +82,11 @@ namespace TinyModule {
             Logger::print(Logger::ERROR, "Failed to setup image module");
             return -1;
         }
-        texture = TinyTexture::load(texture_path, renderer);
+        if(stretch){
+            texture = TinyTexture::load(texture_path, renderer, src_rect.w, src_rect.h);
+        } else {
+            texture = TinyTexture::load(texture_path, renderer);
+        }
 
         return 0;
     }

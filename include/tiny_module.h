@@ -40,10 +40,11 @@ namespace TinyModule {
     };
 
     struct Image : public Base {
-        Image(std::string texture, Vector position, Vector size);
+        Image(std::string texture, Vector position, Vector size, bool stretch);
         ~Image();
         std::string texture_path = "";
         SDL_Texture* texture = nullptr;
+        bool stretch = false;
 
         int init(SDL_Renderer* renderer, TinyInterface* relative_inf, size_t id) override;
         void update() override;

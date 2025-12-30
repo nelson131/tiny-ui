@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10.0)
-project(tiny-ui VERSION 1.5.1 LANGUAGES C CXX)
+project(tiny-ui VERSION 1.5.2 LANGUAGES C CXX)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(SDL2 REQUIRED sdl2)

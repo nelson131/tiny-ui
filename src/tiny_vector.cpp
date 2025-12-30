@@ -104,6 +104,10 @@ Vector& operator / (Vector v1, const Vector& other){
     return v1.divide(other);
 }
 
+bool operator > (Vector v1, const Vector& other){
+    return v1.x > other.x || v1.y > other.y;
+}
+
 size_t Vector::len(){
     return sqrt(x * x + y * y);
 }

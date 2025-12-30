@@ -31,6 +31,7 @@ class Vector {
     friend Vector& operator - (Vector v1, const Vector& other);
     friend Vector& operator * (Vector v1, const Vector& other);
     friend Vector& operator / (Vector v1, const Vector& other);
+    friend bool operator > (Vector v1, const Vector& other);
 
     size_t len();
 
