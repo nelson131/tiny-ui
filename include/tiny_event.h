@@ -5,6 +5,9 @@
 #include "tiny_logger.h"
 #include <SDL2/SDL.h>
 
+// Event class
+// Keeps events structs, types and handles events logics
+
 using callback = void(*)();
 
 enum class EventType {

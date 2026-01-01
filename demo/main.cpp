@@ -44,7 +44,9 @@ int main(){
         true // -> image stretching <true/false>
     );
 
-    image_module->set_executor(EventType::CLICK_EVENT, &click_event_test);
+    // Creating an event for any module ->
+    // args<Event_type, pointer to your func>   
+    image_module->set_executor(EventType::CLICK_EVENT, &click_event_test); 
 
     // Text Module >>>
     Vector txt_position = {100, 100}; // Using vector struct from tiny_vector.h
