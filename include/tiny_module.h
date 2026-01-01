@@ -1,11 +1,14 @@
 #ifndef TINY_MODULE_H
 #define TINY_MODULE_H
 
+#include "tiny_event.h"
 #include "tiny_text.h"
 #include "tiny_vector.h"
 #include "tiny_texture.h"
 #include <SDL2/SDL.h>
 #include <string>
+
+using callback = void(*)();
 
 // Modules class
 // Objects of UI
@@ -22,6 +25,8 @@ namespace TinyModule {
         TinyInterface* relative_inf = nullptr;
         Vector* relative_position = nullptr;
 
+        TinyEvent::Base* event = nullptr;
+
         size_t id = -1;
 
         Vector global_position = {0, 0};
@@ -37,6 +42,8 @@ namespace TinyModule {
 
         int setup(SDL_Renderer* renderer, TinyInterface* relative_inf, std::string module_name, size_t id);
         int load_rects(Vector* size);
+
+        void set_executor(EventType event_type, callback func);
     };
 
     struct Image : public Base {

@@ -47,10 +47,11 @@ int main(){
     Vector txt_position = {100, 100}; // Using vector struct from tiny_vector.h
     Vector txt_size = {300, 300};
     auto text_module = interface->create_module<TinyModule::Text>(
-        "assets/font.ttf",
-        "HalfLife 3 confirmed",
-        txt_position,
-        txt_size
+        // Unique arguments for this module
+        "assets/font.ttf", // -> text font
+        "HalfLife 3 confirmed", // -> content of module
+        txt_position, // -> position relative to interface position
+        txt_size // -> size of module
     );
 
     // Main loop of your program

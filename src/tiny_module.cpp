@@ -9,7 +9,9 @@ namespace TinyModule {
     Base::Base(Vector pos, Vector size)
         : local_position(pos), size(size)
     {};
-    Base::~Base() = default;
+    Base::~Base(){
+        if(event) delete event;
+    }
 
     int Base::init(SDL_Renderer* renderer, TinyInterface* relative_inf, size_t id){ return 0; };
     void Base::update(){};
@@ -61,6 +63,47 @@ namespace TinyModule {
         src_rect.w = dest_rect.w;
         src_rect.h = dest_rect.h;
         return 0;
+    }
+
+    void Base::set_executor(EventType event_type, callback func){
+        if(!func){
+            Logger::print(Logger::ERROR, "Failed to set executor, cause func is nullptr");
+            return;
+        }
+
+        if(event){
+            delete event;
+            event = nullptr;
+        }
+
+        switch (event_type) {
+        case EventType::CREATE_EVENT:
+            event = new TinyEvent::onCreate();
+            break;
+        case EventType::DESTROY_EVENT:
+            event = new TinyEvent::onDestroy();
+            break;
+        case EventType::ENABLE_EVENT:
+            event = new TinyEvent::onEnable();
+            break;
+        case EventType::DISABLE_EVENT:
+            event = new TinyEvent::onDisable();
+            break;
+        case EventType::MOVE_EVENT:
+            event = new TinyEvent::onMove();
+            break;
+        case EventType::CURSOR_ENTER_EVENT:
+            event = new TinyEvent::onCursorEnter();
+            break;
+        case EventType::CURSOR_LEAVE_EVENT:
+            event = new TinyEvent::onCursorLeave();
+            break;
+        case EventType::CLICK_EVENT:
+            event = new TinyEvent::onClick();
+            break;
+        default:
+            break;
+        }
     }
 
     // Image module
