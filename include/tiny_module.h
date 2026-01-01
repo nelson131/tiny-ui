@@ -7,6 +7,7 @@
 #include "tiny_texture.h"
 #include <SDL2/SDL.h>
 #include <string>
+#include <vector>
 
 using callback = void(*)();
 
@@ -25,7 +26,7 @@ namespace TinyModule {
         TinyInterface* relative_inf = nullptr;
         Vector* relative_position = nullptr;
 
-        TinyEvent::Base* event = nullptr;
+        std::vector<TinyEvent::Base*> stash_events;
 
         size_t id = -1;
 

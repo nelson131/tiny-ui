@@ -10,7 +10,12 @@ namespace TinyModule {
         : local_position(pos), size(size)
     {};
     Base::~Base(){
-        if(event) delete event;
+        for(size_t i = 0; i < stash_events.size(); i++){
+            delete stash_events[i];
+            stash_events[i] = nullptr;
+        }
+
+        stash_events.clear();
     }
 
     int Base::init(SDL_Renderer* renderer, TinyInterface* relative_inf, size_t id){ return 0; };
@@ -71,10 +76,7 @@ namespace TinyModule {
             return;
         }
 
-        if(event){
-            delete event;
-            event = nullptr;
-        }
+        TinyEvent::Base* event = nullptr;
 
         switch (event_type) {
         case EventType::CREATE_EVENT:
@@ -84,19 +86,25 @@ namespace TinyModule {
             event = new TinyEvent::onDestroy(func);
             break;
         case EventType::ENABLE_EVENT:
-            event = new TinyEvent::onEnable(func);
+            event = new TinyEvent::onEnable(func, visible);
             break;
         case EventType::DISABLE_EVENT:
-            event = new TinyEvent::onDisable(func);
+            event = new TinyEvent::onDisable(func, visible);
             break;
-        case EventType::MOVE_EVENT:
-            event = new TinyEvent::onMove(func);
+        case EventType::MOVE_GLOBAL_EVENT:
+            event = new TinyEvent::onMove(func, global_position);
+            break;
+        case EventType::MOVE_LOCAL_EVENT:
+            event = new TinyEvent::onMove(func, local_position);
+            break;
+        case EventType::CURSOR_IN_AREA_EVENT:
+            event = new TinyEvent::onCursorInArea(func, local_position, size);
             break;
         case EventType::CURSOR_ENTER_EVENT:
-            event = new TinyEvent::onCursorEnter(func);
+            event = new TinyEvent::onCursorEnter(func, local_position, size);
             break;
         case EventType::CURSOR_LEAVE_EVENT:
-            event = new TinyEvent::onCursorLeave(func);
+            event = new TinyEvent::onCursorLeave(func, local_position, size);
             break;
         case EventType::CLICK_EVENT:
             event = new TinyEvent::onClick(func, local_position, size);
@@ -104,12 +112,16 @@ namespace TinyModule {
         default:
             break;
         }
+
+        stash_events.push_back(event);
     }
 
     void Base::handle_event(){
-        if(!event) return;
+        if(stash_events.empty()) return;
 
-        event->handle();
+        for(size_t i = 0; i < stash_events.size(); i++){
+            stash_events[i]->handle();
+        }
     }
 
     // Image module
@@ -176,7 +188,7 @@ namespace TinyModule {
 
     void Text::update(){
         handle_event();
-        
+
         global_position.x = (*relative_position).x + local_position.x;
         global_position.y = (*relative_position).y + local_position.y;
 

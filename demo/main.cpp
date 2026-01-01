@@ -7,7 +7,8 @@
 
 int init_window(SDL_Window** window, SDL_Renderer** renderer);
 void handle_event(SDL_Event& event, bool& is_running);
-void click_event_test();
+void event_test();
+void event_test_s();
 
 int main(){
     SDL_Window* window = nullptr;
@@ -46,7 +47,8 @@ int main(){
 
     // Creating an event for any module ->
     // args<Event_type, pointer to your func>   
-    image_module->set_executor(EventType::CLICK_EVENT, &click_event_test); 
+    image_module->set_executor(EventType::CURSOR_LEAVE_EVENT, &event_test);
+    image_module->set_executor(EventType::CLICK_EVENT, &event_test_s);
 
     // Text Module >>>
     Vector txt_position = {100, 100}; // Using vector struct from tiny_vector.h
@@ -115,6 +117,10 @@ void handle_event(SDL_Event& event, bool& is_running){
     }
 }
 
-void click_event_test(){
+void event_test(){
     std::cout << "In the end it doesnt even matter" << std::endl;
+}
+
+void event_test_s(){
+    std::cout << "This is my december" << std::endl;
 }
