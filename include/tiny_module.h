@@ -44,6 +44,7 @@ namespace TinyModule {
         int load_rects(Vector* size);
 
         void set_executor(EventType event_type, callback func);
+        void handle_event();
     };
 
     struct Image : public Base {

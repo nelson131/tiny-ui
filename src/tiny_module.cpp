@@ -78,32 +78,38 @@ namespace TinyModule {
 
         switch (event_type) {
         case EventType::CREATE_EVENT:
-            event = new TinyEvent::onCreate();
+            event = new TinyEvent::onCreate(func);
             break;
         case EventType::DESTROY_EVENT:
-            event = new TinyEvent::onDestroy();
+            event = new TinyEvent::onDestroy(func);
             break;
         case EventType::ENABLE_EVENT:
-            event = new TinyEvent::onEnable();
+            event = new TinyEvent::onEnable(func);
             break;
         case EventType::DISABLE_EVENT:
-            event = new TinyEvent::onDisable();
+            event = new TinyEvent::onDisable(func);
             break;
         case EventType::MOVE_EVENT:
-            event = new TinyEvent::onMove();
+            event = new TinyEvent::onMove(func);
             break;
         case EventType::CURSOR_ENTER_EVENT:
-            event = new TinyEvent::onCursorEnter();
+            event = new TinyEvent::onCursorEnter(func);
             break;
         case EventType::CURSOR_LEAVE_EVENT:
-            event = new TinyEvent::onCursorLeave();
+            event = new TinyEvent::onCursorLeave(func);
             break;
         case EventType::CLICK_EVENT:
-            event = new TinyEvent::onClick();
+            event = new TinyEvent::onClick(func, local_position, size);
             break;
         default:
             break;
         }
+    }
+
+    void Base::handle_event(){
+        if(!event) return;
+
+        event->handle();
     }
 
     // Image module
@@ -135,6 +141,8 @@ namespace TinyModule {
     }
 
     void Image::update(){
+        handle_event();
+
         global_position.x = (*relative_position).x + local_position.x;
         global_position.y = (*relative_position).y + local_position.y;
 
@@ -167,6 +175,8 @@ namespace TinyModule {
     }
 
     void Text::update(){
+        handle_event();
+        
         global_position.x = (*relative_position).x + local_position.x;
         global_position.y = (*relative_position).y + local_position.y;
 

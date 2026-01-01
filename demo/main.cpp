@@ -7,6 +7,7 @@
 
 int init_window(SDL_Window** window, SDL_Renderer** renderer);
 void handle_event(SDL_Event& event, bool& is_running);
+void click_event_test();
 
 int main(){
     SDL_Window* window = nullptr;
@@ -42,6 +43,8 @@ int main(){
         img_size, // -> size of module, cant be bigger than interface ofc
         true // -> image stretching <true/false>
     );
+
+    image_module->set_executor(EventType::CLICK_EVENT, &click_event_test);
 
     // Text Module >>>
     Vector txt_position = {100, 100}; // Using vector struct from tiny_vector.h
@@ -108,4 +111,8 @@ void handle_event(SDL_Event& event, bool& is_running){
                 break;
         }
     }
+}
+
+void click_event_test(){
+    std::cout << "In the end it doesnt even matter" << std::endl;
 }

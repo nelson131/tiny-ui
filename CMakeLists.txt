@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10.0)
-project(tiny-ui VERSION 1.6.0 LANGUAGES C CXX)
+project(tiny-ui VERSION 1.6.1 LANGUAGES C CXX)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(SDL2 REQUIRED sdl2)
@@ -13,6 +13,7 @@ add_library(tiny-ui
     src/tiny_text.cpp
     src/tiny_ui.cpp
     src/tiny_vector.cpp
+    src/tiny_event.cpp
 )
 
 target_include_directories(tiny-ui
