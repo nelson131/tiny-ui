@@ -24,6 +24,7 @@ namespace TinyEvent {
         Base(callback func);
         ~Base();
 
+        SDL_Event event;
         callback func = nullptr;
 
         virtual void handle();
@@ -84,6 +85,7 @@ namespace TinyEvent {
 
         void handle() override;
 
+        bool was_pressed = false;
         bool in_area();
     };
 

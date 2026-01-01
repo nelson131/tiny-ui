@@ -97,10 +97,13 @@ void onClick::handle(){
     }
 
     Uint32 mouse_state = SDL_GetMouseState(&x, &y);
+    bool pressed = mouse_state & SDL_BUTTON(SDL_BUTTON_LEFT);
 
-    if(mouse_state & SDL_BUTTON(SDL_BUTTON_LEFT) && in_area()){
+    if(pressed && !was_pressed && in_area()){
         (*func)();
     }
+
+    was_pressed = pressed;
 }
 
 bool onClick::in_area(){
